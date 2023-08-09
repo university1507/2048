@@ -9,14 +9,7 @@ namespace _2048
     internal class Program
     {
         static Random random = new Random();
-        static int[,] map = new int[4, 4]
-        {
-            {512, 0, 1024, 10 },
-            {0, 32, 0, 128 },
-            {0, 2048, 0, 0 },
-            {0, 0, 64, 256 },
-        };
-
+        static int[,] map = new int[4, 4];
 
         static bool CheckLosse()
         {
@@ -65,7 +58,6 @@ namespace _2048
                     if (map[i, j] == 0)
                     {
                         Console.Write(new string(' ', 4));
-
                     }
                     else
                     {
@@ -105,13 +97,18 @@ namespace _2048
                 Console.WriteLine(new string('-', 20));
             }
         }
-
+        static void Init()
+        {
+            Console.CursorVisible = false;
+            CreateNewNumber();
+        }
         static void Main(string[] args)
         {
-            while(true)
+            Init();
+            while (true)
             {
                 DrawMap();
-                Console.ReadKey();
+                UpdateCellsPositions();
                 if (CheckLosse())
                 {
                     break;
@@ -120,6 +117,122 @@ namespace _2048
             }
             Console.WriteLine("Ви програли");
             Console.ReadKey();
+        }
+
+
+        static void UpdateLeft()
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                for (int i = 1; i < map.GetLength(0); i++)
+                {
+                    if (map[j, i] == map[j, i - 1])
+                    {
+                        map[j, i - 1] = map[j, i] * 2;
+                        map[j, i] = 0;
+                    }
+                    else if (map[j, i - 1] == 0)
+                    {
+                        map[j, i - 1] = map[j, i];
+                        map[j, i] = 0;
+                    }
+                }
+            }
+        }
+        static void UpdateUp()
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                for (int i = 1; i < map.GetLength(0); i++)
+                {
+                    if (map[i, j] == map[i - 1, j])
+                    {
+                        map[i - 1, j] = map[i, j] * 2;
+                        map[i, j] = 0;
+                    }
+                    else if (map[i - 1, j] == 0)
+                    {
+                        map[i - 1, j] = map[i, j];
+                        map[i, j] = 0;
+                    }
+                }
+            }
+        }
+        static void UpdateDown()
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                for (int i = map.GetLength(0) - 2; i >= 0; i--)
+                {
+                    if (map[i, j] == map[i + 1, j])
+                    {
+                        map[i + 1, j] = map[i, j] * 2;
+                        map[i, j] = 0;
+                    }
+                    else if (map[i + 1, j] == 0)
+                    {
+                        map[i + 1, j] = map[i, j];
+                        map[i, j] = 0;
+                    }
+                }
+            }
+        }
+        static void UpdateRight()
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                for (int i = map.GetLength(0) - 2; i >= 0; i--)
+                {
+                    if (map[j, i] == map[j, i + 1])
+                    {
+                        map[j, i + 1] = map[j, i] * 2;
+                        map[j, i] = 0;
+                    }
+                    else if (map[j, i + 1] == 0)
+                    {
+                        map[j, i + 1] = map[j, i];
+                        map[j, i] = 0;
+                    }
+                }
+            }
+        }
+
+        static void UpdateCellsPositions()
+        {
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.A:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        UpdateLeft();
+                    }
+                    break;
+
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.W:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        UpdateUp();
+                    }
+                    break;
+
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.D:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        UpdateRight();
+                    }
+                    break;
+
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.S:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        UpdateDown();
+                    }
+                    break;
+            }
         }
     }
 }
