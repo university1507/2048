@@ -26,6 +26,16 @@ namespace _2048
             }
             return true;
         }
+        static int RandomNumber()
+        {
+            int number = 2;
+            if(random.Next(0, 100) > 75 )
+            {
+                number = 4;
+            }
+            return number;
+        }
+
         static void CreateNewNumber()
         {
             int x = 0;
@@ -37,8 +47,7 @@ namespace _2048
                 y = random.Next(0, map.GetLength(1));
             }
             while (map[x, y] != 0);
-
-            map[x, y] = 2;
+            map[x, y] = RandomNumber();
         }
         static void DrawMap()
         {
