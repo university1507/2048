@@ -63,9 +63,17 @@ namespace _2048
                     {
                         int length = map[i, j].ToString().Length;
                         string space = new string(' ', 4 - length);
-                        if (map[i, j] < 32)
+                        if (map[i, j] < 8)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        }
+                        else if(map[i, j] < 16)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
+                        }
+                        else if(map[i, j] < 32)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         }
                         else if (map[i, j] < 64)
                         {
@@ -118,7 +126,6 @@ namespace _2048
             Console.WriteLine("Ви програли");
             Console.ReadKey();
         }
-
 
         static void UpdateLeft()
         {
