@@ -10,6 +10,22 @@ namespace _2048
     {
         static Random random = new Random();
         static int[,] map = new int[4, 4];
+
+
+        static bool CheckLosse()
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (map[i, j] == 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         static void CreateNewNumber()
         {
             int x = 0;
@@ -47,9 +63,14 @@ namespace _2048
             {
                 DrawMap();
                 Console.ReadKey();
+                if (CheckLosse())
+                {
+                    break;
+                }
                 CreateNewNumber();
             }
-            
+            Console.WriteLine("Ви програли");
+            Console.ReadKey();
         }
     }
 }
