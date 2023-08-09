@@ -8,16 +8,25 @@ namespace _2048
 {
     internal class Program
     {
-        static int[,] map = new int[,]
+        static Random random = new Random();
+        static int[,] map = new int[4, 4];
+        static void CreateNewNumber()
         {
-            {0, 0, 0, 0 },
-            {0, 0, 0, 0 },
-            {0, 2048, 0, 0 },
-            {0, 0, 0, 0 },
-        };
+            int x = 0;
+            int y = 0;
 
+            do
+            {
+                x = random.Next(0, map.GetLength(0));
+                y = random.Next(0, map.GetLength(1));
+            }
+            while (map[x, y] != 0);
+
+            map[x, y] = 2;
+        }
         static void DrawMap()
         {
+            Console.SetCursorPosition(0, 0);
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -34,8 +43,13 @@ namespace _2048
 
         static void Main(string[] args)
         {
-            DrawMap();
-            Console.ReadKey();
+            while(true)
+            {
+                DrawMap();
+                Console.ReadKey();
+                CreateNewNumber();
+            }
+            
         }
     }
 }
