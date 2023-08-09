@@ -8,8 +8,19 @@ namespace _2048
 {
     internal class Program
     {
+        static string direction;
         static void Main(string[] args)
         {
+            UpdateDirection();
+        }
+
+        static void UpdateDirection()
+        {
+            while (true)
+            {
+                direction = Control.GetKey(Console.ReadKey().Key);
+                Console.WriteLine(direction);
+            }
         }
     }
 }
